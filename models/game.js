@@ -16,6 +16,7 @@ const gameSchema = new Schema({
     },
     status: {
         type: String,
+        enum: ["new", "over", "active"],
         default: "new"
     },
     sketchbooks:[{
@@ -26,10 +27,10 @@ const gameSchema = new Schema({
         type: String,
         default:0
     },
-    createdAt: { 
-        type: Date, 
+    createdAt: {
+        type: Date,
         expires: 900,
-        default: Date.now 
+        default: Date.now
     }
 })
 
@@ -49,7 +50,7 @@ const memoizedPublishTimeToSubmit = _.memoize(({ _id, turn }) => {
     return new Promise((resolve) => {
         //Odd means drawing mode - Even means guessing mode
         const delay = (turn%2==0) ? 60000 : 90000
-        console.log("DELAY", delay) 
+        console.log("DELAY", delay)
         setTimeout(() => {
             pubsub.publish("TIME_TO_SUBMIT", {
                 timeToSubmit: {

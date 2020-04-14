@@ -7,7 +7,12 @@ const pageSchema = new Schema({
         ref: 'User'
     },
     pageType:{
-        type: String
+        type: String,
+        enum: [
+            'init',
+            'guessing',
+            'drawing'
+        ]
     },
     content:{
         type: String
@@ -16,8 +21,8 @@ const pageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Sketchbook'
     },
-    createdAt: { 
-        type: Date, 
+    createdAt: {
+        type: Date,
         expires: 900,
         default: Date.now
     }
